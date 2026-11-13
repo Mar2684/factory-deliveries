@@ -20,6 +20,13 @@ import os
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, unquote, urlsplit
 
+# Bootstrap d'import robuste : fonctionne en « python todo-app/app.py »
+# comme en import de package (« todo-app.app »).
+import os as _os
+import sys as _sys
+_APP_DIR = _os.path.dirname(_os.path.abspath(__file__))
+if _APP_DIR not in _sys.path:
+    _sys.path.insert(0, _APP_DIR)
 from todo_core import TaskStore
 
 DEFAULT_PORT = 8000

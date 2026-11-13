@@ -16,9 +16,13 @@ import tempfile
 import threading
 import unittest
 
-# Rend le test importable quel que soit le répertoire de lancement.
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
+# Bootstrap d'import robuste : fonctionne que le module soit importé comme
+# « todo-app.tests.test_todo_core », « tests.test_todo_core » ou exécuté en script.
+import os as _os
+import sys as _sys
+_APP_DIR = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))
+if _APP_DIR not in _sys.path:
+    _sys.path.insert(0, _APP_DIR)
 from todo_core import Task, TaskStore  # noqa: E402
 
 
